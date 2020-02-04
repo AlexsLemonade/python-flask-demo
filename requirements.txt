@@ -1,0 +1,6 @@
+flask
+SQLAlchemy
+alembic
+Flask-SQLAlchemy
+Flask-Migrate
+psycopg2-binary
