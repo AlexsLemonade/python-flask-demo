@@ -1,8 +1,8 @@
 """Initial migration.
 
-Revision ID: 826baedadf87
+Revision ID: 4c823666c803
 Revises: 
-Create Date: 2020-02-04 17:12:40.595358
+Create Date: 2020-02-04 17:32:33.432702
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '826baedadf87'
+revision = '4c823666c803'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -21,7 +21,8 @@ def upgrade():
     op.create_table('grants',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('alexs_id', sa.String(length=100), nullable=False),
-    sa.PrimaryKeyConstraint('id', 'alexs_id')
+    sa.PrimaryKeyConstraint('id', 'alexs_id'),
+    sa.UniqueConstraint('id')
     )
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -29,13 +30,15 @@ def upgrade():
     sa.Column('last_name', sa.String(length=100), nullable=True),
     sa.Column('orcid', sa.String(length=100), nullable=True),
     sa.Column('email_address', sa.String(length=100), nullable=True),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('id')
     )
     op.create_table('organizations',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('owner_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['owner_id'], ['users.id'], ),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('id')
     )
     op.create_table('user_organization_associations',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -43,7 +46,8 @@ def upgrade():
     sa.Column('organization_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['organization_id'], ['organizations.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
-    sa.PrimaryKeyConstraint('id', 'user_id', 'organization_id')
+    sa.PrimaryKeyConstraint('id', 'user_id', 'organization_id'),
+    sa.UniqueConstraint('id')
     )
     op.create_table('userorganization_grant_associations',
     sa.Column('user_organization_id', sa.Integer(), nullable=True),
