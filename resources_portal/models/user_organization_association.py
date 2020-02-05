@@ -11,8 +11,6 @@ class UserOrganizationAssociation(db.Model):
     id = Column(Integer, primary_key=True, unique=True)
     user_id = Column(Integer, ForeignKey("users.id"), primary_key=True)
     organization_id = Column(Integer, ForeignKey("organizations.id"), primary_key=True)
-    user = relationship("User", back_populates="organizations")
-    organization = relationship("Organization", back_populates="users")
-    user_organizations = relationship(
+    grants = relationship(
         "Grant", secondary=userorganization_grant_associations, back_populates="user_organizations",
     )

@@ -4,8 +4,13 @@ import resources_portal.models  # noqa
 from flask import Flask
 from flask_migrate import Migrate
 from resources_portal.db import db
+from resources_portal.views import user
 
 migrate = Migrate()
+
+
+def register_views(app: Flask):
+    app.register_blueprint(user.user, url_prefix="/users")
 
 
 def create_app(test_config=None):
@@ -24,6 +29,8 @@ def create_app(test_config=None):
 
     db.init_app(app)
     migrate.init_app(app, db)
+
+    register_views(app)
 
     # a simple page that says hello
     @app.route("/hello")
