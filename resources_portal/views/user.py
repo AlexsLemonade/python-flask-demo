@@ -1,6 +1,4 @@
-import json
-
-from flask import Blueprint, request
+from flask import Blueprint, jsonify, request
 from resources_portal.db import db
 from resources_portal.models import User
 
@@ -33,7 +31,7 @@ def update(user_id: int):
 def show(user_id: int):
     user = db.session.query(User).get_or_404(user_id)
 
-    return (json.dumps(user.as_dict()), 200)
+    return jsonify(user.as_dict())
 
 
 @user.route("/", methods=["GET"])
@@ -42,4 +40,4 @@ def list():
     users = db.session.query(User).all()
     users = [user.as_dict() for user in users]
 
-    return (json.dumps(users), 200)
+    return jsonify(users)
