@@ -4,10 +4,11 @@ This is a demo of the python Flask framework implementing an API for a portion o
 
 ## Installation
 
-Create a virtualenv with:
+Create and activate a virtualenv with:
 
 ```
 virtualenv -p python3 venv
+source venv/bin/activate
 ```
 
 Install the python dependencies with:
