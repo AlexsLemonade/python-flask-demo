@@ -8,7 +8,7 @@ user = Blueprint("user", __name__)
 @user.route("/", methods=["POST"])
 @user.route("", methods=["POST"])
 def create():
-    db.session.add(User(**request.json))
+    db.session.add(User(**request.get_json()))
     db.session.commit()
 
     return ("User created.", 201)
@@ -20,7 +20,7 @@ def update(user_id: int):
     # Make sure the User exists
     db.session.query(User).get_or_404(user_id)
 
-    db.session.query(User).filter(User.id == user_id).update(request.json)
+    db.session.query(User).filter(User.id == user_id).update(request.get_json())
     db.session.commit()
 
     return ("User updated.", 200)
