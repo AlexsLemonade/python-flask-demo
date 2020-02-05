@@ -16,10 +16,7 @@ def register_views(app: Flask):
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__)
-    app.config[
-        "SQLALCHEMY_DATABASE_URI"
-    ] = "postgresql://resources_portal_user:resources_portal_password@172.17.0.3/resources_portal"
-    app.config.from_mapping(SECRET_KEY="dev")
+    app.config.from_envvar("RESOURCES_PORTAL_CONFIG_FILE")
 
     # ensure the instance folder exists
     try:
@@ -31,10 +28,5 @@ def create_app(test_config=None):
     migrate.init_app(app, db)
 
     register_views(app)
-
-    # a simple page that says hello
-    @app.route("/hello")
-    def hello():
-        return "Hello, World!"
 
     return app
