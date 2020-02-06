@@ -1,4 +1,7 @@
 from resources_portal.db import db
+from resources_portal.models.user_organization_association import (  # noqa
+    UserOrganizationAssociation,
+)
 from resources_portal.models.userorganization_grant_association import (  # noqa
     userorganization_grant_associations,
 )

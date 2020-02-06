@@ -4,5 +4,7 @@ alembic
 Flask-SQLAlchemy
 Flask-Migrate
 psycopg2-binary
-pypandoc
-flask-request-validator==2.0.0
+flask-restful
+marshmallow
+marshmallow-sqlalchemy
+flask-marshmallow

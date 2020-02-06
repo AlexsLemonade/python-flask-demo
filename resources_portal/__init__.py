@@ -3,14 +3,16 @@ import os
 import resources_portal.models  # noqa
 from flask import Flask
 from flask_migrate import Migrate
+from flask_restful import Api
 from resources_portal.db import db
 from resources_portal.views import user
 
 migrate = Migrate()
 
 
-def register_views(app: Flask):
-    app.register_blueprint(user.user, url_prefix="/users")
+def initialize_routes(api: Api):
+    api.add_resource(user.UsersApi, "/users")
+    api.add_resource(user.UserApi, "/users/<user_id>")
 
 
 def set_database_URI(app: Flask):
@@ -30,6 +32,9 @@ def create_app(test_config=None):
     app.config.from_envvar("RESOURCES_PORTAL_CONFIG_FILE")
     set_database_URI(app)
 
+    api = Api(app)
+    initialize_routes(api)
+
     # ensure the instance folder exists
     try:
         os.makedirs(app.instance_path)
@@ -39,6 +44,8 @@ def create_app(test_config=None):
     db.init_app(app)
     migrate.init_app(app, db)
 
-    register_views(app)
+    from resources_portal.schemas import ma
+
+    ma.init_app(app)
 
     return app
