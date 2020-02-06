@@ -17,9 +17,9 @@ if [ ! -d "$VOLUMES" ]; then
   mkdir -p "$VOLUMES"
 fi
 
-# Check if a docker database named "drdb" exists, and if so just run it
-if [ "$(docker ps -a --filter name=drdb -q)" ]; then
-  docker start drdb > /dev/null
+# Check if a docker database named "resources_portal_db" exists, and if so just run it
+if [ "$(docker ps -a --filter name=resources_portal_db -q)" ]; then
+  docker start resources_portal_db > /dev/null
   echo "Started database."
 # Otherwise, install it from docker hub
 else
