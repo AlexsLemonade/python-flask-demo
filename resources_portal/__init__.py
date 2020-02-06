@@ -14,11 +14,12 @@ def register_views(app: Flask):
 
 
 def set_database_URI(app: Flask):
-    database_URI_template = "postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}"
+    database_URI_template = "postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
     app.config["SQLALCHEMY_DATABASE_URI"] = database_URI_template.format(
         DB_USER=app.config["DB_USER"],
         DB_PASSWORD=app.config["DB_PASSWORD"],
         DB_HOST=os.environ["DB_HOST"],
+        DB_PORT=app.config["DB_PORT"],
         DB_NAME=app.config["DB_NAME"],
     )
 
