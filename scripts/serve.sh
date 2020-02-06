@@ -8,9 +8,14 @@ script_directory="$(perl -e 'use File::Basename;
 cd "$script_directory" || exit
 cd ..
 
+. scripts/common.sh
+
 export FLASK_APP=resources_portal
 export FLASK_RUN_PORT=5001
 export FLASK_ENV=development
+export DB_HOST=$(get_docker_db_ip_address)
 export RESOURCES_PORTAL_CONFIG_FILE=environments/dev.cfg
+
+flask db upgrade --directory resources_portal/migrations
 
 flask run
